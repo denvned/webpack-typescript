@@ -1,0 +1,7 @@
+lib
+node_modules
+*.sublime-project
+*.sublime-workspace
+.vscode
+.idea
+*.iml

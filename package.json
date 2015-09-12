@@ -1,0 +1,31 @@
+{
+  "name": "webpack-typescript",
+  "version": "0.5.1",
+  "author": "Denis Nedelyaev",
+  "license": "MIT",
+  "description": "Lightweight TypeScript Loader for webpack.",
+  "keywords": [
+    "typescript-loader",
+    "ts-loader",
+    "webpack-loader",
+    "typescript",
+    "loader",
+    "webpack",
+    "ts",
+    "tsx",
+    "jsx"
+  ],
+  "homepage": "https://github.com/denvned/webpack-typescript",
+  "bugs": "https://github.com/denvned/webpack-typescript/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/denvned/webpack-typescript.git"
+  },
+  "main": "lib/index.js",
+  "peerDependencies": {
+    "typescript": "^1.5.3 || ^1.6.0-beta"
+  },
+  "devDependencies": {
+    "typescript": "^1.6.0-beta"
+  }
+}
