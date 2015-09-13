@@ -5,7 +5,7 @@ import * as path from 'path';
 import * as fs from 'fs';
 import CompilationRequest from './CompilationRequest';
 import Dependencies from './Dependencies';
-import cwd from './cwd'
+import baseDir from './baseDir'
 import {tracedMethod} from './util/traced';
 import trace from './util/trace';
 
@@ -39,17 +39,17 @@ export default class LanguageServiceHost implements ts.LanguageServiceHost {
 
     @tracedMethod()
     getCurrentDirectory() {
-        return cwd;
+        return baseDir;
     }
 
     @tracedMethod()
     getScriptFileNames() {
-        return [path.relative(cwd, this.request.inputFileName)];
+        return [path.relative(baseDir, this.request.inputFileName)];
     }
 
     @tracedMethod({ return: false })
     getScriptSnapshot(fileName: string) {
-        const filePath = path.resolve(cwd, fileName);
+        const filePath = path.resolve(baseDir, fileName);
 
         // Add to dependencies every path that TypeScript tries,
         // even if the file does not exist, because it may become available later
@@ -73,7 +73,7 @@ export default class LanguageServiceHost implements ts.LanguageServiceHost {
 
     @tracedMethod()
     getScriptVersion(fileName: string) {
-        const filePath = path.resolve(cwd, fileName);
+        const filePath = path.resolve(baseDir, fileName);
 
         // Add to dependencies every path that TypeScript tries,
         // even if the file does not exist, because it may become available later

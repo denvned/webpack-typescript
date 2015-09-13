@@ -9,7 +9,7 @@ import OptionsBuilder from './OptionsBuilder';
 import compile from './compile';
 import CompilationRequest from './CompilationRequest';
 import CompilationResult from './CompilationResult';
-import cwd from './cwd'
+import baseDir from './baseDir'
 
 export default function loadTypeScript(loaderContext: any, input: string) {
 	const diagnostics = new Diagnostics();
@@ -37,7 +37,7 @@ export default function loadTypeScript(loaderContext: any, input: string) {
 			content: <string>null
 		};
 
-		let dir = cwd;
+		let dir = baseDir;
 		while (true) {
 			const filePath = path.resolve(dir, 'tsconfig.json');
 
@@ -45,7 +45,7 @@ export default function loadTypeScript(loaderContext: any, input: string) {
 
 			try {
 				result.content = fs.readFileSync(filePath, 'utf8');
-				result.path = path.relative(cwd, filePath);
+				result.path = path.relative(baseDir, filePath);
 				break;
 			} catch (err) {}
 

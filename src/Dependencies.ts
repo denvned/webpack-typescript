@@ -1,13 +1,13 @@
 /// <reference path="../typings/node/node.d.ts" />
 
 import * as path from 'path';
-import cwd from './cwd'
+import baseDir from './baseDir'
 
 export default class Dependencies {
 	private dependencies: { [filePath: string]: boolean } = {};
 
 	add(filePath: string) {
-		this.dependencies[path.resolve(cwd, filePath)] = true;
+		this.dependencies[path.resolve(baseDir, filePath)] = true;
 	}
 
 	forEach(callback: (filePath: string) => void) {
