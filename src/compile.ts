@@ -5,13 +5,13 @@ import * as path from 'path';
 import LanguageServiceHost from './LanguageServiceHost';
 import CompilationRequest from './CompilationRequest';
 import CompilationResult from './CompilationResult';
+import Dependencies from './Dependencies';
 import Diagnostics from './Diagnostics';
-import cwd from './cwd'
 
 const languageServiceHost = new LanguageServiceHost();
 const languageService = ts.createLanguageService(languageServiceHost);
 
-export default function compile(request: CompilationRequest, diagnostics: Diagnostics) {
+export default function compile(request: CompilationRequest, dependencies: Dependencies, diagnostics: Diagnostics) {
 	languageServiceHost.setCompilationRequest(request);
 	const program = languageService.getProgram();
 	const result = new CompilationResult();
@@ -20,7 +20,7 @@ export default function compile(request: CompilationRequest, diagnostics: Diagno
 
 	collectDiagnostics();
 
-	collectInputFiles();
+	collectDependencies();
 
 	return result;
 
@@ -62,10 +62,10 @@ export default function compile(request: CompilationRequest, diagnostics: Diagno
 		}
 	}
 
-	function collectInputFiles() {
+	function collectDependencies() {
 		const files = program.getSourceFiles();
 		if (files) {
-			result.inputFiles = files.map(file => path.resolve(cwd, file.fileName));
+			files.forEach(file => dependencies.add(file.fileName));
 		}
 	}
 }

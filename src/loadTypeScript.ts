@@ -4,6 +4,7 @@ import * as ts from 'typescript';
 import * as path from 'path';
 import * as fs from 'fs';
 import Diagnostics from './Diagnostics';
+import Dependencies from './Dependencies';
 import OptionsBuilder from './OptionsBuilder';
 import compile from './compile';
 import CompilationRequest from './CompilationRequest';
@@ -12,6 +13,7 @@ import cwd from './cwd'
 
 export default function loadTypeScript(loaderContext: any, input: string) {
 	const diagnostics = new Diagnostics();
+	const dependencies = new Dependencies();
 
 	setupLoader();
 
@@ -32,15 +34,14 @@ export default function loadTypeScript(loaderContext: any, input: string) {
 	function readConfigFile() {
 		const result = {
 			path: <string>null,
-			content: <string>null,
-			triedPaths: <string[]>[]
+			content: <string>null
 		};
 
 		let dir = cwd;
 		while (true) {
 			const filePath = path.resolve(dir, 'tsconfig.json');
 
-			result.triedPaths.push(filePath);
+			dependencies.add(filePath);
 
 			try {
 				result.content = fs.readFileSync(filePath, 'utf8');
@@ -71,15 +72,11 @@ export default function loadTypeScript(loaderContext: any, input: string) {
 			input,
 			options
 		));
-		return compile(request, diagnostics);
+		return compile(request, dependencies, diagnostics);
 	}
 
 	function stateDependencies() {
-		configFile.triedPaths.forEach(path => loaderContext.dependency(path));
-
-		if (result.inputFiles) {
-			result.inputFiles.forEach(file => loaderContext.dependency(file));
-		}
+		dependencies.forEach(filePath => loaderContext.dependency(filePath));
 	}
 
 	function sendResult() {
