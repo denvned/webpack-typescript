@@ -4,6 +4,7 @@ import * as ts from 'typescript';
 import * as path from 'path';
 import * as fs from 'fs';
 import CompilationRequest from './CompilationRequest';
+import Dependencies from './Dependencies';
 import cwd from './cwd'
 import {tracedMethod} from './util/traced';
 import trace from './util/trace';
@@ -11,9 +12,10 @@ import trace from './util/trace';
 export default class LanguageServiceHost implements ts.LanguageServiceHost {
     private projectVersion: number = 0;
     private request: CompilationRequest;
+    private dependencies: Dependencies;
 
     @tracedMethod()
-    setCompilationRequest(request: CompilationRequest) {
+    setCompilationRequest(request: CompilationRequest, dependencies: Dependencies) {
         if (!Object.isFrozen(request)) {
 			throw new TypeError('request should be frozen');
 		}
@@ -21,6 +23,7 @@ export default class LanguageServiceHost implements ts.LanguageServiceHost {
 			throw new TypeError('request.options should be frozen');
 		}
         this.request = request;
+        this.dependencies = dependencies;
         this.projectVersion++;
     }
 
@@ -47,6 +50,11 @@ export default class LanguageServiceHost implements ts.LanguageServiceHost {
     @tracedMethod({ return: false })
     getScriptSnapshot(fileName: string) {
         const filePath = path.resolve(cwd, fileName);
+
+        // Add to dependencies every path that TypeScript tries,
+        // even if the file does not exist, because it may become available later
+        this.dependencies.add(filePath);
+
         let source: string;
         if (this.request.isInputFile(filePath)) {
             trace('Using input');
@@ -66,6 +74,11 @@ export default class LanguageServiceHost implements ts.LanguageServiceHost {
     @tracedMethod()
     getScriptVersion(fileName: string) {
         const filePath = path.resolve(cwd, fileName);
+
+        // Add to dependencies every path that TypeScript tries,
+        // even if the file does not exist, because it may become available later
+        this.dependencies.add(filePath);
+
         try {
             return fs.statSync(filePath).mtime.toISOString();
         } catch (err) {

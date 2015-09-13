@@ -12,15 +12,13 @@ const languageServiceHost = new LanguageServiceHost();
 const languageService = ts.createLanguageService(languageServiceHost);
 
 export default function compile(request: CompilationRequest, dependencies: Dependencies, diagnostics: Diagnostics) {
-	languageServiceHost.setCompilationRequest(request);
+	languageServiceHost.setCompilationRequest(request, dependencies);
 	const program = languageService.getProgram();
 	const result = new CompilationResult();
 
 	const emitResult = request.options.noEmit ? null : emit();
 
 	collectDiagnostics();
-
-	collectDependencies();
 
 	return result;
 
@@ -59,13 +57,6 @@ export default function compile(request: CompilationRequest, dependencies: Depen
 		}
 		if (emitResult) {
 			diagnostics.add(emitResult.diagnostics);
-		}
-	}
-
-	function collectDependencies() {
-		const files = program.getSourceFiles();
-		if (files) {
-			files.forEach(file => dependencies.add(file.fileName));
 		}
 	}
 }
