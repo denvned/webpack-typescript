@@ -10,10 +10,13 @@ import compile from './compile';
 import CompilationRequest from './CompilationRequest';
 import CompilationResult from './CompilationResult';
 import baseDir from './baseDir'
+import trace from './util/trace';
 
 export default function loadTypeScript(loaderContext: any, input: string) {
 	const diagnostics = new Diagnostics();
 	const dependencies = new Dependencies();
+
+	trace('LOAD: ' + loaderContext.resourcePath);
 
 	setupLoader();
 
@@ -61,7 +64,11 @@ export default function loadTypeScript(loaderContext: any, input: string) {
 	function prepareOptions() {
 		const optionsBuilder = new OptionsBuilder(diagnostics);
 		if (configFile.content) {
+			trace('CONFIG FILE: ' + configFile.path);
+
 			optionsBuilder.addConfigFileText(configFile.path, configFile.content);
+		} else {
+			trace('CONFIG FILE WAS NOT FOUND');
 		}
 		return optionsBuilder.build(loaderContext.sourceMap);
 	}
@@ -76,7 +83,11 @@ export default function loadTypeScript(loaderContext: any, input: string) {
 	}
 
 	function stateDependencies() {
-		dependencies.forEach(filePath => loaderContext.dependency(filePath));
+		dependencies.forEach(filePath => {
+			trace('DEPENDENCY: ' + filePath);
+
+			loaderContext.dependency(filePath);
+		});
 	}
 
 	function sendResult() {
