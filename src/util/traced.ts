@@ -13,7 +13,8 @@ function getFunctionName(fn: Function) {
 }
 
 function getFunctionArgNames(fn: Function) {
-    return getFunctionText(fn).match(FN_ARGS)[1].split(',').map(arg => arg.trim());
+    const args = getFunctionText(fn).match(FN_ARGS)[1].trim();
+    return args ? args.split(',').map(arg => arg.trim()) : [];
 }
 
 function stringify(value: any) {
