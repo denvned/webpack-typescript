@@ -1,6 +1,6 @@
 {
   "name": "webpack-typescript",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "author": "Denis Nedelyaev",
   "license": "MIT",
   "description": "Lightweight TypeScript Loader for webpack.",
