@@ -1,8 +1,12 @@
+/// <reference path="../typings/node/node.d.ts" />
+
 import * as ts from 'typescript';
+import * as path from 'path';
 import LanguageServiceHost from './LanguageServiceHost';
 import CompilationRequest from './CompilationRequest';
 import CompilationResult from './CompilationResult';
 import Diagnostics from './Diagnostics';
+import cwd from './cwd'
 
 const languageServiceHost = new LanguageServiceHost();
 const languageService = ts.createLanguageService(languageServiceHost);
@@ -61,7 +65,7 @@ export default function compile(request: CompilationRequest, diagnostics: Diagno
 	function collectInputFiles() {
 		const files = program.getSourceFiles();
 		if (files) {
-			result.inputFiles = files.map(file => file.fileName);
+			result.inputFiles = files.map(file => path.resolve(cwd, file.fileName));
 		}
 	}
 }
