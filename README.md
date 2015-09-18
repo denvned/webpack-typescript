@@ -1,7 +1,7 @@
 TypeScript Loader for *webpack*
 ===============================
 
-*webpack-typescript* is a lightweight TypeScript loader for *webpack* allowing you to pack multiple modules written in TypeScript into a bundle. It supports not only TypeScript 1.5, but also TypeScript 1.6, which among other things introduces support for React JSX.
+*webpack-typescript* is a lightweight TypeScript loader for *webpack* allowing you to pack multiple modules written in TypeScript into a bundle.  It supports TypeScript 1.6, which among other things have introduced support for React JSX.  TypeScript 1.5 is also supported.
 
 Installation
 ------------
@@ -9,10 +9,6 @@ Installation
 To install *webpack-typescript* run the following command in your project directory:
 
     npm install webpack-typescript --save-dev
-
-And if you need TypeScript 1.6 Beta, run the following command before or after installing *webpack-typescript:*
-
-	npm install typescript@1.6.0-beta --save-dev
 
 Configuration
 -------------
