@@ -1,4 +1,4 @@
 export default class CompilationResult {
-	output: string;
-	sourceMap: any;
+    output: string;
+    sourceMap: any;
 }

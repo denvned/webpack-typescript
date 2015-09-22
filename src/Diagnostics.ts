@@ -1,15 +1,15 @@
 import * as ts from 'typescript';
 
 export default class Diagnostics {
-	private diagnostics: ts.Diagnostic[] = [];
+    private diagnostics: ts.Diagnostic[] = [];
 
     get isEmpty() {
         return this.diagnostics.length === 0;
     }
-
-	add(diagnostics: ts.Diagnostic[]) {
-		this.diagnostics = this.diagnostics.concat(diagnostics);
-	}
+    
+    add(diagnostics: ts.Diagnostic[]) {
+        this.diagnostics = this.diagnostics.concat(diagnostics);
+    }
 
     toString() {
         let text = '';
