@@ -48,6 +48,6 @@ TypeScript compiler options can be supplied by a standard [tsconfig.json](https:
 
 *webpack-typescript* uses the same algorithm to find *tsconfig.json* as TypeScript compiler uses itself, i.e. first look in the current working directory, then in ancestor directories until it is found.
 
-**Important note:** When using *webpack-typescript*, it is most logical to set `"target"` to `"ES5"` (or `"ES6"` with nightly builds, or the upcoming TypeScript 1.7), and `"module"` to `"commonjs"`, but it should be also possible to target ES6 and pipe output to [babel-loader](https://github.com/babel/babel-loader), for example.
+**Important note:** it is most logical to set the `"module"` compiler option to `"commonjs"`, especially if you don't plan to pipe output to another loader (e.g. [babel-loader](https://github.com/babel/babel-loader)) that undestands a different module format.
 
-**If you have an question, a bug report, or a feature request, don't hesitate to post an issue in [the issue tracker](https://github.com/denvned/webpack-typescript/issues).**
+**If you have a question, a bug report, or a feature request, please don't hesitate to post an issue in [the issue tracker](https://github.com/denvned/webpack-typescript/issues).**
