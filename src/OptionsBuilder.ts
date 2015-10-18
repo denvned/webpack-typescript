@@ -10,7 +10,7 @@ export default class OptionsBuilder {
     constructor(public diagnostics: Diagnostics) {}
 
     addConfigFileText(filePath: string, content: string) {
-        const result = ts.parseConfigFileText(filePath, content);
+        const result = (ts.parseConfigFileText || (<any>ts).parseConfigFileTextToJson)(filePath, content);
         if (result.error) {
             this.diagnostics.add([result.error]);
         } else {
@@ -29,7 +29,7 @@ export default class OptionsBuilder {
 
         function parseOptions() {
             config.files = [];
-            const result = ts.parseConfigFile(config, ts.sys, basePath);
+            const result = (ts.parseConfigFile || (<any>ts).parseJsonConfigFileContent)(config, ts.sys, basePath);
 
             if (result.errors.length > 0) {
                 this.diagnostics.add(result.errors);

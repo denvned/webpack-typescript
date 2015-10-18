@@ -1,9 +1,9 @@
 {
   "name": "webpack-typescript",
-  "version": "0.5.4",
+  "version": "0.5.5",
   "author": "Denis Nedelyaev",
   "license": "MIT",
-  "description": "Lightweight TypeScript Loader for webpack.",
+  "description": "Lightweight, cleanly designed TypeScript Loader for webpack.",
   "keywords": [
     "typescript-loader",
     "ts-loader",
@@ -23,7 +23,7 @@
   },
   "main": "lib/index.js",
   "peerDependencies": {
-    "typescript": "^1.5.3"
+    "typescript": "^1.5.3 || >1.7.0-dev || >1.8.0-dev"
   },
   "devDependencies": {
     "typescript": "^1.6.2"
