@@ -44,7 +44,7 @@ module.exports = {
 
 ### Compiler Options
 
-TypeScript compiler options can be supplied by a standard [tsconfig.json](https://github.com/Microsoft/TypeScript/wiki/tsconfig.json) file.  Note that the `"files"` and `"exclude"` sections are ignored, because now *webpack* decides what to compile.  Likewise, the loader ignores the options `"out"`, `"outDir"`, and `"rootDir"`.
+TypeScript compiler options can be supplied by a standard [tsconfig.json](https://github.com/Microsoft/TypeScript/wiki/tsconfig.json) file.  Note that the `"files"` and `"exclude"` sections are ignored, because now *webpack* decides what to compile.  Likewise, the loader ignores the options `"out"`, `"outFile"`, `"outDir"`, `"rootDir"`, `"sourceRoot"`, and `"mapRoot"`.
 
 *webpack-typescript* uses the same algorithm to find *tsconfig.json* as TypeScript compiler uses itself, i.e. first look in the current working directory, then in ancestor directories until it is found.
 

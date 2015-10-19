@@ -80,7 +80,11 @@ export default function loadTypeScript(loaderContext: any, input: string) {
             input,
             options
         ));
-        return compile(request, dependencies, diagnostics);
+        const result = compile(request, dependencies, diagnostics);
+        if (result.sourceMap) {
+            result.sourceMap.sources = [loaderContext.request];
+        }
+        return result;
     }
 
     function stateDependencies() {
