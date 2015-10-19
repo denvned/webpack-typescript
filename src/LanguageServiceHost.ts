@@ -96,7 +96,7 @@ export default class LanguageServiceHost implements ts.LanguageServiceHost {
         return this.request.newLine;
     }
 
-    /* HACK: resolveSync of Webpack throws errors most of the time
+    /* HACK: we can't call async resolve, and resolveSync works only with enhanced-require, not with webpack
     @tracedMethod()
     resolveModuleNames(moduleNames: string[], containingFile: string) {
         const dir = path.dirname(containingFile);
