@@ -1,6 +1,8 @@
 /// <reference path="../typings/node/node.d.ts" />
+/// <reference path="../typings/loader-utils.d.ts" />
 
 import * as ts from 'typescript';
+import * as loaderUtils from 'loader-utils';
 import * as path from 'path';
 import * as fs from 'fs';
 import Diagnostics from './Diagnostics';
@@ -19,6 +21,8 @@ export default function loadTypeScript(loaderContext: any, input: string) {
     trace('LOAD: ' + loaderContext.resourcePath);
 
     setupLoader();
+
+    const query = loaderUtils.parseQuery(loaderContext.query);
 
     const configFile = readConfigFile();
 
@@ -71,6 +75,8 @@ export default function loadTypeScript(loaderContext: any, input: string) {
         } else {
             trace('CONFIG FILE WAS NOT FOUND');
         }
+        optionsBuilder.addConfig({ compilerOptions: query }, baseDir);
+
         return optionsBuilder.build(loaderContext.sourceMap);
     }
 
@@ -82,7 +88,7 @@ export default function loadTypeScript(loaderContext: any, input: string) {
         ));
         const result = compile(request, dependencies, diagnostics);
         if (result.sourceMap) {
-            result.sourceMap.sources = [loaderContext.request];
+            result.sourceMap.sources = [loaderUtils.getRemainingRequest(loaderContext)];
         }
         return result;
     }

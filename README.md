@@ -29,11 +29,12 @@ module.exports = {
 	resolve: {
         extensions: ['', '.js', '.ts', '.tsx']
     },
+    devtool: 'source-map', // if we want a source map
 	module: {
 		loaders: [
 			{
 				test: /\.tsx?$/,
-				loader: 'webpack-typescript'
+				loader: 'webpack-typescript?target=ES5&jsx=react'
 			}
 		]
 	}
@@ -44,10 +45,8 @@ module.exports = {
 
 ### Compiler Options
 
-TypeScript compiler options can be supplied by a standard [tsconfig.json](https://github.com/Microsoft/TypeScript/wiki/tsconfig.json) file.  Note that the `"files"` and `"exclude"` sections are ignored, because now *webpack* decides what to compile.  Likewise, the loader ignores the options `"out"`, `"outFile"`, `"outDir"`, `"rootDir"`, `"sourceRoot"`, and `"mapRoot"`.
+TypeScript [compiler options](https://github.com/Microsoft/TypeScript/wiki/Compiler-Options) can be supplied as loader query parameters (like in the sample *webpack.config.js* above), and by a standard [tsconfig.json](https://github.com/Microsoft/TypeScript/wiki/tsconfig.json) file.  Note that the `"files"` and `"exclude"` sections in *tsconfig.json* are ignored, because now *webpack* decides what to compile.  Likewise, the loader ignores the compiler options `"out"`, `"outFile"`, `"outDir"`, `"rootDir"`, `"sourceRoot"`, and `"mapRoot"`.
 
-*webpack-typescript* uses the same algorithm to find *tsconfig.json* as TypeScript compiler uses itself, i.e. first look in the current working directory, then in ancestor directories until it is found.
-
-**Important note:** it is most logical to set the `"module"` compiler option to `"commonjs"`, especially if you don't plan to pipe output to another loader (e.g. [babel-loader](https://github.com/babel/babel-loader)) that undestands a different module format.
+*webpack-typescript* uses the same algorithm to find a *tsconfig.json* as TypeScript compiler uses itself, i.e. first look in the current working directory, then in ancestor directories until it is found.
 
 **If you have a question, a bug report, or a feature request, please don't hesitate to post an issue in [the issue tracker](https://github.com/denvned/webpack-typescript/issues).**
