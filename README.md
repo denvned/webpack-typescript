@@ -1,4 +1,4 @@
-TypeScript Loader for *webpack*
+TypeScript Loader for *webpack* ![unmaintained](http://img.shields.io/badge/status-unmaintained-red.png)
 ===============================
 
 *webpack-typescript* is a lightweight, cleanly designed TypeScript loader for *webpack* allowing you to pack multiple modules written in TypeScript into a bundle.  It supports TypeScript 1.5, 1.6, and experimentally supports [nightly builds](http://blogs.msdn.com/b/typescript/archive/2015/07/27/introducing-typescript-nightlies.aspx) of upcoming TypeScript 1.7 and 1.8.
